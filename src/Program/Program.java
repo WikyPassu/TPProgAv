@@ -1,6 +1,8 @@
 package Program;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import Clases.Persona;
@@ -9,9 +11,18 @@ import Utilidades.UBean;
 
 public class Program {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Persona p = new Persona();
+		//Crear objeto de tipo Persona
+		Class c = Clases.Persona.class;
+		Constructor[] constructores = c.getConstructors();
+		Object p = null;
+		for(Constructor con: constructores) {
+			if(con.getParameterCount() == 0) {
+				p = con.newInstance();
+				break;
+			}
+		}
 		
 		//Test 1a obtenerAtributos
 		ArrayList<Field> fields = UBean.obtenerAtributos(p);

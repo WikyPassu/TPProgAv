@@ -39,18 +39,15 @@ public class UBean {
 	public static Object ejecutarGet(Object o, String att) {
 		Class c = o.getClass();
 		Object retorno = null;
-		
-		for(Field f: c.getDeclaredFields()) {
-			String nombreGetter = "get".concat(att.substring(0, 1).toUpperCase()).concat(att.substring(1));
+		String nombreGetter = "get".concat(att.substring(0, 1).toUpperCase()).concat(att.substring(1));
 			
-			for(Method m: c.getDeclaredMethods()) {
-				if(nombreGetter.equals(m.getName())) {
-					try {
-						retorno = m.invoke(o, null);
-						break;
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-						e.printStackTrace();
-					}
+		for(Method m: c.getDeclaredMethods()) {
+			if(nombreGetter.equals(m.getName())) {
+				try {
+					retorno = m.invoke(o, null);
+					break;
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					e.printStackTrace();
 				}
 			}
 		}

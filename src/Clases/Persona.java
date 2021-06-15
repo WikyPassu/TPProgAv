@@ -1,7 +1,15 @@
 package Clases;
 
+import Anotaciones.*;
+
+@Tabla(nombre = "personas")
 public class Persona {
+	
+	@Id
+	private Integer id;
+	@Columna(nombre = "per_nombre")
 	private String nombre;
+	@Columna(nombre = "per_apellido")
 	private String apellido;
 	
 	public Persona() {}
@@ -9,6 +17,14 @@ public class Persona {
 	public Persona(String nombre, String apellido) {
 		this.nombre = nombre;
 		this.apellido = apellido;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	public String getNombre() {
