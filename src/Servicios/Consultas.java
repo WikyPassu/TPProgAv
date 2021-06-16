@@ -28,4 +28,26 @@ public class Consultas {
 		
 		return query;
 	}
+	
+	public static String modificar(Object o) {
+		ArrayList<Field> fields = UBean.obtenerAtributos(o);
+		String query = "update ".concat(o.getClass().getAnnotation(Tabla.class).nombre()).concat(" set ");
+		String camposValor = "";
+		String nombreCampoId = "";
+		String contenidoCampoId = "";
+		
+		for(Field f: fields) {
+			if(f.getAnnotation(Id.class) == null) {
+				camposValor = camposValor.concat(f.getAnnotation(Columna.class).nombre()).concat("=").concat(UBean.ejecutarGet(o, f.getName()).toString()).concat(", ");	
+			}
+			else {
+				nombreCampoId = f.getAnnotation(Columna.class).nombre();
+				contenidoCampoId = UBean.ejecutarGet(o, f.getName()).toString();
+			}
+		}
+		camposValor = camposValor.substring(0, camposValor.length() - 2);
+		query = query.concat(camposValor).concat(" where ").concat(nombreCampoId).concat("=").concat(contenidoCampoId);
+		
+		return query;
+	}
 }

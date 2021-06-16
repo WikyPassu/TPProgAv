@@ -6,6 +6,7 @@ import Anotaciones.*;
 public class Persona {
 	
 	@Id
+	@Columna(nombre = "id")
 	private Integer id;
 	@Columna(nombre = "per_nombre")
 	private String nombre;
