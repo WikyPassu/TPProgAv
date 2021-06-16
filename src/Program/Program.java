@@ -37,12 +37,16 @@ public class Program {
 		
 		//Test 3a guardar
 		System.out.println(Consultas.guardar(p));
-		*/
+		
 		//Test 3b modificar
 		UBean.ejecutarSet(p, "id", 2);
 		UBean.ejecutarSet(p, "nombre", "Maria");
 		UBean.ejecutarSet(p, "apellido", "Lopez");
 		System.out.println(Consultas.modificar(p));
+		*/
+		//Test 3c eliminar
+		UBean.ejecutarSet(p, "id", 2);
+		System.out.println(Consultas.eliminar(p));
 		
 		//Test 7 obtenerTodos
 		ArrayList<Persona> personas = (ArrayList<Persona>) Consultas.obtenerTodos(Persona.class);

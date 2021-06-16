@@ -85,6 +85,28 @@ public class Consultas {
 		return query;
 	}
 	
+	public static String eliminar(Object o) {
+		ArrayList<Field> fields = UBean.obtenerAtributos(o);
+		String query = "delete from ".concat(o.getClass().getAnnotation(Tabla.class).nombre()).concat(" where ");
+		
+		for(Field f: fields) {
+			if(f.getAnnotation(Id.class) != null) {
+				query = query.concat(f.getAnnotation(Columna.class).nombre()).concat("="+UBean.ejecutarGet(o, f.getName()));
+			}
+		}
+		
+		try {
+			UConexion.abrirConexion();
+			PreparedStatement pst = UConexion.c.prepareStatement(query);
+			pst.execute();
+			UConexion.cerrarConexion();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
+	
 	public static ArrayList<?> obtenerTodos(Class<?> c){
 		ArrayList<Object> objetos = new ArrayList<Object>();
 		try {
