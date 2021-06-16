@@ -31,19 +31,17 @@ public class Program {
 		System.out.println(UBean.ejecutarGet(p, "nombre"));
 		System.out.println(UBean.ejecutarGet(p, "apellido"));
 		
+		//Test 4 UConexion
+		UConexion cn = UConexion.generarObjeto();
+		
 		//Test 3a guardar (por ahora solo trae la query armada)
 		System.out.println(Consultas.guardar(p));
 		
 		//Test 3b modificar (por ahora solo trae la query armada)
-		UBean.ejecutarSet(p, "id", 1);
-		UBean.ejecutarSet(p, "nombre", "Maria");
-		UBean.ejecutarSet(p, "apellido", "Lopez");
-		System.out.println(Consultas.modificar(p));
-		
-		//Test 4 UConexion
-		UConexion cn = UConexion.generarObjeto();
-		UConexion.abrirConexion();
-		UConexion.cerrarConexion();
+		//UBean.ejecutarSet(p, "id", 1);
+		//UBean.ejecutarSet(p, "nombre", "Maria");
+		//UBean.ejecutarSet(p, "apellido", "Lopez");
+		//System.out.println(Consultas.modificar(p));
 	}
 
 }

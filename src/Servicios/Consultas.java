@@ -1,14 +1,22 @@
 package Servicios;
 
 import java.lang.reflect.Field;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Anotaciones.Columna;
 import Anotaciones.Id;
 import Anotaciones.Tabla;
 import Utilidades.UBean;
+import Utilidades.UConexion;
 
 public class Consultas {
+	
+	public static ArrayList<Object> obtenerTodos(Class clase){
+		ArrayList<Object> objetos = new ArrayList<Object>();
+		return objetos;
+	}
 	
 	public static String guardar(Object o) {
 		ArrayList<Field> fields = UBean.obtenerAtributos(o);
@@ -19,12 +27,21 @@ public class Consultas {
 		for(Field f: fields) {
 			if(f.getAnnotation(Id.class) == null) {
 				nombreCampos = nombreCampos.concat(f.getAnnotation(Columna.class).nombre()).concat(", ");
-				contenidoCampos = contenidoCampos.concat(UBean.ejecutarGet(o, f.getName()).toString()).concat(", ");
+				contenidoCampos = contenidoCampos.concat("'"+UBean.ejecutarGet(o, f.getName()).toString()+"'").concat(", ");
 			}
 		}
 		nombreCampos = nombreCampos.substring(0, nombreCampos.length() - 2).concat(") values (");
 		contenidoCampos = contenidoCampos.substring(0, contenidoCampos.length() - 2).concat(")");
 		query = query.concat(nombreCampos).concat(contenidoCampos);
+		
+		try {
+			UConexion.abrirConexion();
+			PreparedStatement pst = UConexion.c.prepareStatement(query);
+			pst.execute();
+			UConexion.cerrarConexion();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 		
 		return query;
 	}
