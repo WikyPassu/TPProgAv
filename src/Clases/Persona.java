@@ -43,4 +43,37 @@ public class Persona {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == null) {
+			return false;
+		}
+		else if(o.getClass().equals(this.getClass())) {
+			Persona p = (Persona)o;
+			if(p.id == this.id) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.id * 7 + this.nombre.hashCode() + this.apellido.hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb  = new StringBuilder();
+		sb.append(this.id + " - ");
+		sb.append(this.nombre + " - ");
+		sb.append(this.apellido);
+		return sb.toString();
+	}
 }
